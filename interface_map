@@ -73,5 +73,144 @@ public interface Map<K,V>
     V get(Object key);
     /*
         返回指定键所在的值映射，如果此映射不包含映射关键字，则为null。
+        更正式地说，如果这个映射包含从键k到值v的映射（key==null？k==null：key.equals（k）），那么这个方法返回v;
+    否则返回null（最多可以有一个这样的映射）
+        如果这个映射允许空值，那么null的返回值并不一定表示映射不包含映射关键字;映射也可能显式映射关键字为null。
+    containsKey操作可以用来区分这两个案例。
+    Parameters:
+        key-其关联值将被返回的键
+    Returns:
+        指定的键映射到的值，或者如果为null该映射不包含该键的映射
+    Throws:
+        ClassCastException-如果该键的地图类型不合适（可选）
+        NullPointerException-如果指定的键是空的，并且该映射不允许空键（可选）
     */
+    
+    //修改操作
+    
+    V put(K key, V value);
+    /*
+        将指定值与此映射中的指定键相关联（可选操作）。
+    如果映射先前包含该键的映射，则旧值将被指定的值替换（映射m被认为包含键的映射k当且仅当m.containsKey（k）将返回true。）
+    Parameters:
+        key-键与指定值相关联
+        value-值与指定的键相关联
+    Returns:
+        与key关联的前一个值;如果没有key的映射，则返回null（null返回还可以指示映射先前将null与key关联，如果实现支持null值）。
+    Throws:
+        UnsupportedOperationException-如果放置操作不受此地图支持
+        ClassCastException-如果指定的键或值的类阻止它被存储在这个映射
+        NullPointerException-如果指定的键或值为空，并且此映射不允许空键或值
+        IllegalArgumentException-如果指定键或值的某些属性阻止将其存储在此映射中
+    */
+    
+    V remove(Object key);
+    /*
+        如果该映射存在，则从该映射中除去该映射（可选操作）。
+    更正式地，如果该映射包含从键k到值v的映射那么（key==null？k==null：key.equals（k）），该映射将被移除（映射最多可以包含一个这样的映射）。
+        返回此映射先前与键关联的值;如果映射不包含键映射，则返回null。
+        如果此映射允许空值，则返回值为null并不一定表示该映射不包含映射;映射也可能将映射明确映射到空值。
+        一旦调用返回，映射将不包含指定键的映射。
+    Parameters:
+        key-键的映射将被从地图上删除
+    Returns:
+        之前与键关联的值，如果没有键映射，则返回null。
+    Throws:
+        UnsupportedOperationException-如果此映射不支持删除操作
+        ClassCastException-如果该键的地图类型不合适（可选）
+        NullPointerException-如果指定的键是空的，并且该映射不允许空键（可选）
+    */
+    
+    //批量操作
+    
+    void putAll(Map<? extends K, ? extends V> m);
+    /*
+        将指定映射的所有映射复制到此映射（可选操作）。
+    此调用的效果等同于在此映射上调用put（k，v）的次数，对于指定的映射（从关键字k到值v）如果指定的地图在操作过程中被修改，则此操作的行为是不确定的。
+    Parameters:
+        m-映射存储在这张地图上
+    Throws:
+        UnsupportedOperationException-如果putAll操作不受此映射支持
+        ClassCastException-如果指定的地图中的某个键或值的类别阻止将其存储在此地图中
+        NullPointerException-如果指定的映射为空，或者该映射不允许空键或值，并且指定的映射包含空键或值
+        IllegalArgumentException-如果指定地图中某个键或值的某个属性阻止将其存储在此地图中
+    */
+    
+    void clear();
+    /*
+        从此映射中删除所有映射（可选操作）。在此调用返回后，映射将为空。
+    Throws:
+        UnsupportedOperationException-如果该地图不支持清除操作
+    */
+    
+    //查看
+    
+    Set<K> keySet();
+    /*
+        返回此映射中包含的键的Set视图。该集由映射支持，因此对映射的更改会反映在集中，反之亦然。
+    如果在对集进行迭代的同时映射被修改（除了通过迭代器自己的删除操作），迭代的结果是不确定的。
+    集合支持元素删除，通过Iterator.remove，Set.remove，removeAll，retainAll和clear操作从映射中删除相应的映射它不支持add或addAll操作。
+    Returns:
+        包含在此映射中的键的集合视图
+    */
+    
+    Collection<V> values();
+    /*
+        返回此映射中包含的值的集合视图。集合由映射支持，因此对映射的更改反映在集合中，反之亦然。
+    如果在迭代集合的迭代过程中修改映射（除了通过迭代器自己的删除操作），迭代的结果是不确定的。
+    集合支持元素删除，从映射中删除相应的映射，通过Iterator.remove，Collection.remove，removeAll，retainAll和clear操作。它不支持add或addAll操作。
+    Returns:
+        该地图中包含的值的集合视图
+    */
+    
+    Set<Map.Entry<K, V>> entrySet();
+    /*
+        返回此映射中包含的映射的Set视图。集合由映射支持，因此对映射的更改会反映在集合中，反之亦然。
+    如果在对集合进行迭代的同时映射被修改（除了通过迭代器自己的移除操作，或者通过迭代器返回的映射条目上的setValue操作），迭代的结果是不确定的。
+    集合支持元素移除，通过迭代器从映射中移除相应的映射。删除，Set.remove，removeAll，retainAll和清除操作。它不支持add或addAll操作。
+    Returns:
+        该地图中包含的映射的集合视图
+    */
+    
+    //比较和哈希
+    
+    boolean equals(Object o);
+    /*
+        将指定对象与此映射进行比较以得到相等性。如果给定对象也是映射并且两个映射表示相同的映射，则返回true。
+    更多在形式上，如果m1.entrySet（）.equals（m2.entrySet（）），则两个映射m1和m2表示相同的映射，
+    这可以确保equals方法在Map接口的不同实现之间正常工作。
+    Parameters:
+        o-要与这张地图相比较的对象
+    Returns:
+        如果指定的对象等于此映射，则返回true
+    */
+    
+    int hashCode();
+    /*
+        返回此映射的哈希码值。映射的哈希码被定义为映射的entrySet（）视图中每个条目的哈希码的总和。
+    这确保了m1.equals（m2）意味着m1.hashCode（）== m2.hashCode（）对于任何两个映射m1和m2，如Object.hashCode的通用契约所要求的。
+    Returns:
+        此地图的哈希码值
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
