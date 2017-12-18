@@ -21,3 +21,57 @@
 一些实现将显示前者的行为，一些将显示后者。
 更一般地，试图对不符合条件的操作键或值的完成不会导致不合格的元素插入到映射中可能会抛出一个异常，或者它可能会成功，在实现的选项。
 这种例外被标记为在这个接口的规范中“可选”。
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+public interface Map<K,V>
+{
+
+    //查询操作
+    
+    int size();
+    /*
+        返回此映射中键值映射的数量。如果映射包含多个Integer.MAX_VALUE元素，则返回Integer.MAX_VALUE。
+    Returns:
+        此图中键值映射的数量
+    */
+    
+    boolean isEmpty();
+    /*
+        如果此映射不包含键-值映射，则返回true。
+    Returns:
+        如果此映射不包含键-值映射，则为true
+    */
+    
+    boolean containsKey(Object key)
+    /*
+        如果此映射包含指定键的映射关系，则返回true。
+    更正式地返回true，当且仅当此映射包含键k的映射（key==null？k==null：key.equals（k））（最多只能有一个这样的映射）
+    Parameters:
+        key-在这张地图上出现的钥匙将被测试
+    Retures:
+        如果此映射包含指定键的映射，则返回true
+    Throws:
+        ClassCastException-如果该键的地图类型不合适（可选）
+        NullPointerException-如果指定的键是空的，并且该映射不允许空键（可选）
+    */
+    
+    boolean containsValue(Object value);
+    /*
+        如果此映射将一个或多个键映射到指定值，则返回true。
+    更正式地返回true，当且仅当此映射至少包含一个映射到值v（value==null？v==null：value）时才返回true。等于（v））。
+    对于大多数Map接口的实现，这个操作可能需要时间线性的地图大小。
+    Parameters:
+        value-价值在这张地图的存在将被测试
+    Returns:
+        如果此映射将一个或多个键映射到指定的值，则为true
+    Throws:
+        ClassCastException-如果该地图的值是不恰当的类型（可选）
+        NullPointerException-如果指定的值为空，并且该映射不允许空值（可选）
+    */
+    
+    V get(Object key);
+    /*
+        返回指定键所在的值映射，如果此映射不包含映射关键字，则为null。
+    */
+}
